@@ -58,7 +58,11 @@ class SalesAnalyst
   end
 
   def invoice_paid_in_full?(id)
-    find
+    transactions_per_invc = @sales_engine.all_transactions_per_invoice
+    transactions = transactions_per_invc[id]
+    transactions.any? do |transaction|
+      transaction.result == :success
+    end
   end
 
 
