@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry'
 require_relative './item_repository'
 require_relative './merchant_repository'
 require_relative './sales_analyst'
