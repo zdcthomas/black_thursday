@@ -57,4 +57,14 @@ class SalesAnalyst
     find_mean(merchant_price_averages).round(2)
   end
 
+  def invoice_paid_in_full?(id)
+    transactions_per_invc = @sales_engine.all_transactions_per_invoice
+    transactions = transactions_per_invc[id]
+    transactions.any? do |transaction|
+      transaction.result == :success
+    end
+  end
+
+
+
 end

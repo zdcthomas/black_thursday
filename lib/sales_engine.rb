@@ -51,4 +51,9 @@ class SalesEngine
   def all_invoices_per_day
     @invoices.all.group_by { |invoice| invoice.created_at.strftime('%A') }
   end
+
+  def all_transactions_per_invoice
+    @transactions.all.group_by(&:invoice_id)
+  end
+
 end
