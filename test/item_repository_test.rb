@@ -35,7 +35,7 @@ class ItemRepositoryTest < Minitest::Test
       [:updated_at, '2001-09-17 15:28:43 UTC']
     ]
       @items = [@icons, @glitter_frames, @wooden_letters]
-    end
+  end
 
   def test_it_exists
     ir = ItemRepository.new(@items)
@@ -46,7 +46,7 @@ class ItemRepositoryTest < Minitest::Test
   def test_repo_holds_items
     ir = ItemRepository.new(@items)
 
-    ir.items.all? do |item|
+    ir.repository.values.all? do |item|
       assert_instance_of Item, item
     end
   end
@@ -119,7 +119,7 @@ class ItemRepositoryTest < Minitest::Test
     ir.create(id: 263_395_238,
               name: 'Bootees',
               description: 'Gorgeous hand knitted baby bootees.',
-              unit_price: BigDecimal.new(12.00, 4),
+              unit_price: BigDecimal(12.00, 4),
               merchant_id: 12_334_271,
               created_at: Time.now,
               updated_at: Time.now)

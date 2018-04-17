@@ -1,15 +1,18 @@
 # frozen_string_literal: true
-
 require_relative '../lib/item_repository'
 require_relative '../lib/merchant_repository'
 require './test/test_helper'
 require_relative '../lib/sales_engine'
+
 class SalesEngineTest < Minitest::Test
   def setup
     @se = SalesEngine.from_csv(
       items: './data/items.csv',
       merchants: './data/merchants.csv',
-      invoices: './data/invoices.csv'
+      invoices: './data/invoices.csv',
+      invoice_items: './data/invoice_items.csv',
+      transactions: './data/transactions.csv',
+      customers: './data/customers.csv'
       )
   end
 
@@ -39,12 +42,24 @@ class SalesEngineTest < Minitest::Test
     assert_equal 4985, @se.all_invoices_per_merchant.values.flatten.count
   end
 
-  def test_test_all_invoices_per_day
-    assert_equal 7, se.test_test_all_invoices_per_day.keys.count
-    assert_equal 4985, se.all_invoices_per_day.values.flatten.count
-    assert_equal 2, se.all_invoices_per_day[1]
-    assert_equal 3, se.all_invoices_per_day[2]
+  def test_all_invoices_per_day
+    assert_equal 7, @se.all_invoices_per_day.keys.count
+    assert_equal 4985, @se.all_invoices_per_day.values.flatten.count
+    assert_equal 701, @se.all_invoices_per_day.values[1].count
+    assert_equal 741, @se.all_invoices_per_day.values[2].count
   end
+
+  def test_transactions_per_invoice
+    assert_instance_of Hash, @se.all_transactions_per_invoice
+    assert_equal 4985, @se.all_transactions_per_invoice.values.flatten.count
+  end
+
+  def test_find_all_invoice_items_by_invoice_id
+    actual = @se.all_invoice_items_by_invoice
+    assert_instance_of Hash, actual
+  end
+
+
 
 
 

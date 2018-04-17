@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
+require './lib/merchant_repository'
 require './lib/sales_engine'
 require './test/test_helper'
 require './lib/sales_analyst'
-require './lib/merchant_repository'
-# tests sales analyst
+
 class SalesAnalystTest < Minitest::Test
   def setup
-    @sales_engine_full = SalesEngine.new({
-      items:     './data/items.csv',
+    @sales_engine_full = SalesEngine.new(
+      items: './data/items.csv',
       merchants: './data/merchants.csv',
-      invoices: './data/invoices.csv'
-                              })
+      invoices: './data/invoices.csv',
+      invoice_items: './data/invoice_items.csv',
+      transactions: './data/transactions.csv',
+      customers: './data/customers.csv'
+      )
   end
 
   def test_it_exists
@@ -124,38 +127,25 @@ class SalesAnalystTest < Minitest::Test
 
   def test_top_days_by_invoice_count
     sa = SalesAnalyst.new(@sales_engine_full)
-    actual = sa.top_days_by_invoice_count
+    expected = sa.top_days_by_invoice_count
 
-    assert_equal 1, actual.length
-    assert_equal "Wednesday", actual.first
-    assert_instance_of String, actual.first
+    assert_equal "Wednesday", expected.first
+    assert_instance_of String, expected.first
   end
 
-  def test_number_of_invoices_per_day
+  def test_invoice_paid_in_full
     sa = SalesAnalyst.new(@sales_engine_full)
-    actual = sa.number_of_invoices_per_day
-    assert_equal 729, actual.first
-    assert_equal 718, actual.last
+    actual = sa.invoice_paid_in_full?(1)
+    assert actual
   end
 
-  def test_percent_of_total_per_status
+  def test_it_returns_total_amount_of_invoice_by_invoice_id
     sa = SalesAnalyst.new(@sales_engine_full)
-    actual = sa.percent_of_total_invoices_per_status
-
-    assert_equal 3, actual.keys.count
-    assert_equal 29.55, actual[:pending]
-    assert_equal 56.95, actual[:shipped]
-    assert_equal 13.5, actual[:returned]
+    expected = sa.invoice_total(7)
+    assert_instance_of BigDecimal, expected
+    assert_equal 0.1702232e5, expected
   end
 
-  def test_invoice_status
-    sa = SalesAnalyst.new(@sales_engine_full)
 
-    actual = sa.invoice_status(:pending)
-    assert_equal 29.55, actual
-    actual = sa.invoice_status(:shipped)
-    assert_equal 56.95, actual
-    actual = sa.invoice_status(:returned)
-    assert_equal 13.5, actual
-  end
+
 end

@@ -1,9 +1,12 @@
 # frozen_string_literal: true
-
+require 'pry'
 require_relative './item_repository'
 require_relative './merchant_repository'
 require_relative './sales_analyst'
 require_relative './invoice_repository'
+require_relative './invoice_item_repository'
+require_relative './transaction_repository'
+require_relative './customer_repository'
 require_relative './fileio'
 
 # allows creation and access to items and merchants
@@ -11,11 +14,17 @@ class SalesEngine
   attr_reader :items,
               :merchants,
               :analyst,
-              :invoices
+              :invoices,
+              :invoice_items,
+              :transactions,
+              :customers
   def initialize(paths)
     @items = ItemRepository.new(FileIo.load(paths[:items]))
     @merchants = MerchantRepository.new(FileIo.load(paths[:merchants]))
     @invoices = InvoiceRepository.new(FileIo.load(paths[:invoices]))
+    @invoice_items = InvoiceItemRepository.new(FileIo.load(paths[:invoice_items]))
+    @transactions = TransactionRepository.new(FileIo.load(paths[:transactions]))
+    @customers = CustomerRepository.new(FileIo.load(paths[:customers]))
     @analyst = SalesAnalyst.new(self)
   end
 
@@ -42,4 +51,13 @@ class SalesEngine
   def all_invoices_per_day
     @invoices.all.group_by { |invoice| invoice.created_at.strftime('%A') }
   end
+
+  def all_transactions_per_invoice
+    @transactions.all.group_by(&:invoice_id)
+  end
+
+  def all_invoice_items_by_invoice
+    @invoice_items.all.group_by(&:invoice_id)
+  end
+
 end

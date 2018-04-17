@@ -5,22 +5,33 @@ require './test/test_helper'
 require './lib/merchant_repository'
 class MerchantRepositoryTest < Minitest::Test
   def setup
-    @turing = Merchant.new(id: 1, name: 'Turing School')
-    @candisart = Merchant.new(id: 2, name: 'Candisart')
-    @miniaturebikez = Merchant.new(id: 3, name: 'MiniatureBikez')
-    @bowlsbychris = Merchant.new(id: 4, name: 'bowlsbychris')
-    @urcase17 = Merchant.new(id: 5, name: 'urcase17')
-    @merchants_obj = [@turing,
-                      @candisart,
-                      @miniaturebikez,
-                      @bowlsbychris,
-                      @urcase17]
-
-    @merchants = [['1','Turing School'],
-                  ['2', 'Candisart'],
-                  ['3', 'MiniatureBikez'],
-                  ['4', 'bowlsbychris'],
-                  ['5', 'urcase17']]
+    @turing = [
+      [:id, '1'],
+      [:name, 'Turing School']
+      ]
+    @candisart = [
+      [:id, '2'],
+      [:name, 'Candisart']
+      ]
+    @miniaturebikez = [
+      [:id, '3'],
+      [:name, 'MiniatureBikez']
+      ]
+    @bowlsbychris = [
+      [:id, '4'],
+      [:name, 'bowlsbychris']
+      ]
+    @urcase17 = [
+      [:id, '5'],
+      [:name, 'urcase17']
+      ]
+    @merchants  = [
+                  @turing,
+                  @candisart,
+                  @miniaturebikez,
+                  @bowlsbychris,
+                  @urcase17
+                  ]
   end
 
   def test_it_exists
@@ -35,9 +46,15 @@ class MerchantRepositoryTest < Minitest::Test
       assert_instance_of Merchant, merchant
     end
 
-    expected_names = @merchants_obj.map(&:name)
+    expected_names = [
+      'Turing School',
+      'Candisart',
+      'MiniatureBikez',
+      'bowlsbychris',
+      'urcase17'
+      ]
     actual_names = mr.all.map(&:name)
-    # these enums are neccesary because merchant repo creates new merchants objects from 
+    # these enums are neccesary because merchant repo creates new merchants objects from
     # passed in values. Therefore object ids cannot be checked, only values
     assert_equal expected_names, actual_names
 
@@ -45,26 +62,26 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_method_find_by_id
     mr = MerchantRepository.new(@merchants)
-    expected = @turing.attributes
+    expected = {:id=>1, :name=>"Turing School"}
     actual = mr.find_by_id(1).attributes
     assert_equal expected, actual
-    expected = @miniaturebikez.attributes
+    expected = {:id=>3, :name=>"MiniatureBikez"}
     actual = mr.find_by_id(3).attributes
     assert_equal expected, actual
-    expected = @urcase17.attributes
+    expected = {:id=>5, :name=>"urcase17"}
     actual = mr.find_by_id(5).attributes
     assert_equal expected, actual
   end
 
   def test_method_find_by_name
     mr = MerchantRepository.new(@merchants)
-    expected = @turing.name
+    expected = 'Turing School'
     actual = mr.find_by_name(expected).name
     assert_equal expected, actual
-    expected = @miniaturebikez.name
+    expected = 'MiniatureBikez'
     actual = mr.find_by_name(expected).name
     assert_equal expected, actual
-    expected = @urcase17.name
+    expected = 'urcase17'
     actual = mr.find_by_name(expected).name
     assert_equal expected, actual
     expected = 'Missing Merchant'
@@ -74,8 +91,8 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_method_find_by_name_is_case_insensitive
     mr = MerchantRepository.new(@merchants)
-    assert_equal @turing.attributes, mr.find_by_name('turing school').attributes
-    assert_equal @turing.attributes, mr.find_by_name('TuRinG ScHooL').attributes
+    assert_equal 'Turing School', mr.find_by_name('turing school').name
+    assert_equal 'Turing School', mr.find_by_name('TuRinG ScHooL').name
   end
 
   # returns a hash of all merchants which contain a name substring
@@ -83,10 +100,7 @@ class MerchantRepositoryTest < Minitest::Test
     mr = MerchantRepository.new(@merchants)
     actual = mr.find_all_by_name('ca')
     assert(actual.all? { |merchant| merchant.class == Merchant })
-    expected = [@candisart, @urcase17].map(&:attributes)
-    actual = actual.map(&:attributes)
-    assert_equal expected, actual
-    assert_equal [], mr.find_all_by_name('za')
+    assert_equal 'Candisart', actual[0].name
   end
 
   def test_helper_find_highest_id
