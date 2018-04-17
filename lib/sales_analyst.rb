@@ -57,4 +57,6 @@ class SalesAnalyst
     find_mean(merchant_price_averages).round(2)
   end
 
+  
+
 end

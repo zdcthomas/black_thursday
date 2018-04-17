@@ -5,7 +5,7 @@ require './test/test_helper'
 require './lib/sales_analyst'
 require './lib/merchant_repository'
 require 'pry'
-# tests sales analyst
+
 class SalesAnalystTest < Minitest::Test
   def setup
     @sales_engine_full = SalesEngine.new({
@@ -130,6 +130,13 @@ class SalesAnalystTest < Minitest::Test
     assert_equal "Wednesday", expected.first
     assert_instance_of String, expected.first
   end
+
+  def test_invoice_paid_in_full
+    sa = SalesAnalyst.new(@sales_engine_full)
+    expected = sa.invoice_paid_in_full?
+
+    assert
+  end 
 
 
 

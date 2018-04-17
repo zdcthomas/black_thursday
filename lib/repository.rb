@@ -1,7 +1,7 @@
 # frozen_string_literal: true`.
 require 'bigdecimal'
 require 'time'
-require_relative './repository_helper_modules/helper'
+require_relative './repository_helper/helper'
 # helper module for all repositories
 module Repository
   include RepositoryHelper

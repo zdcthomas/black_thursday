@@ -87,7 +87,7 @@ class CustomerRepositoryTest < Minitest::Test
     actual = @cr.find_all_by_last_name('BraUN')
     assert_equal Time.parse('2012-03-27 14:54:10 UTC'), actual[0].created_at
 
-    actual = @cr.find_all_by_last_name('gulGOwsKI')
+    actual = @cr.find_all_by_first_name('pAmeLA')
     assert_equal 35, actual[0].id
 
     actual = @cr.find_all_by_last_name('Cri')
