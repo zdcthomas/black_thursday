@@ -2,7 +2,6 @@ require './lib/invoice'
 require 'time'
 require_relative 'test_helper'
 require './lib/invoice_repository'
-require 'pry'
 
 class InvoiceRepositoryTest < Minitest::Test
 

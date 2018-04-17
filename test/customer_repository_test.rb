@@ -1,8 +1,6 @@
-require 'minitest/autorun'
+require_relative './test_helper'
 require 'time'
-require 'minitest/pride'
 require './lib/customer_repository'
-require 'pry'
 
 class CustomerRepositoryTest < Minitest::Test
 

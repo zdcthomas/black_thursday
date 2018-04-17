@@ -62,13 +62,13 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_method_find_by_id
     mr = MerchantRepository.new(@merchants)
-    expected = @turing.flatten.to_h
+    expected = {:id=>1, :name=>"Turing School"}
     actual = mr.find_by_id(1).attributes
     assert_equal expected, actual
-    expected = @miniaturebikez.attributes
+    expected = {:id=>3, :name=>"MiniatureBikez"}
     actual = mr.find_by_id(3).attributes
     assert_equal expected, actual
-    expected = @urcase17.attributes
+    expected = {:id=>5, :name=>"urcase17"}
     actual = mr.find_by_id(5).attributes
     assert_equal expected, actual
   end

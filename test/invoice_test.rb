@@ -1,7 +1,6 @@
 require_relative 'test_helper'
 require './lib/invoice'
 require 'bigdecimal'
-require 'pry'
 
 
 class InvoiceTest < Minitest::Test

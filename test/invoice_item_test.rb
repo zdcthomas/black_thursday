@@ -1,7 +1,6 @@
-require 'minitest/autorun'
+require_relative './test_helper'
 require 'bigdecimal'
 require 'time'
-require 'minitest/pride'
 require './lib/invoice_item'
 
 class InvoiceItemTest < Minitest::Test

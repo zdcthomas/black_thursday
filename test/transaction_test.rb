@@ -1,6 +1,5 @@
-require 'minitest/autorun'
 require 'time'
-require 'minitest/pride'
+require_relative './test_helper'
 require './lib/transaction'
 
 class TransactionTest < Minitest::Test

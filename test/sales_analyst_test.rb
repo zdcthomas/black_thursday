@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
+require './lib/merchant_repository'
 require './lib/sales_engine'
 require './test/test_helper'
 require './lib/sales_analyst'
-require './lib/merchant_repository'
-require 'pry'
 
 class SalesAnalystTest < Minitest::Test
   def setup
