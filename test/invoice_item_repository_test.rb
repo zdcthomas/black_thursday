@@ -99,7 +99,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
       assert_equal 6, actual[0].quantity
 
       actual = @iir.find_all_by_invoice_id(5)
-      assert_equal BigDecimal.new(323.46, 5), actual[0].unit_price
+      assert_equal BigDecimal(323.46, 5), actual[0].unit_price
   end
 
   def test_it_can_find_highest_id
@@ -115,7 +115,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
                   :item_id     => 444444444,
                   :invoice_id  => 7,
                   :quantity    => 15,
-                  :unit_price  => BigDecimal.new(444.44, 5),
+                  :unit_price  => BigDecimal(444.44, 5),
                   :created_at  => Time.now,
                   :updated_at  => Time.now
                   }
@@ -132,11 +132,11 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal Time.parse('2012-03-27 14:54:10 UTC'), actual.created_at
     assert_equal Time.parse('2012-03-27 14:54:10 UTC'), actual.updated_at
     attributes = {
-      unit_price: BigDecimal.new(0.01, 3)
+      unit_price: BigDecimal(0.01, 3)
     }
     @iir.update(26, attributes)
     invoice_item = @iir.find_by_id(26)
-    assert_equal BigDecimal.new(0.01, 3), invoice_item.unit_price
+    assert_equal BigDecimal(0.01, 3), invoice_item.unit_price
   end
 
   def test_it_can_be_deleted

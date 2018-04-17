@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'pry'
 
 require_relative './analyst_helper/helper'
 # analyses various aspects of sales engine
@@ -58,14 +59,21 @@ class SalesAnalyst
   end
 
   def invoice_paid_in_full?(id)
-    transactions_per_invc = @sales_engine.all_transactions_per_invoice
-    if transactions = transactions_per_invc[id]
+    transactions_per_inv = @sales_engine.all_transactions_per_invoice
+    if transactions = transactions_per_inv[id]
       transactions.any? do |transaction|
         transaction.result == :success
       end
     else
       return false
     end
+  end
+
+  def invoice_total(invoice_id)
+    prices = @sales_engine.all_invoice_items_by_invoice[invoice_id].map do |invoice_item|
+      invoice_item.unit_price * invoice_item.quantity
+    end
+    prices.inject(0){|sum, number| sum+number}
   end
 
 

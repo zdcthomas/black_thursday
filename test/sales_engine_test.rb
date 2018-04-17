@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry'
 require_relative '../lib/item_repository'
 require_relative '../lib/merchant_repository'
 require './test/test_helper'
@@ -53,6 +53,13 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Hash, @se.all_transactions_per_invoice
     assert_equal 4985, @se.all_transactions_per_invoice.values.flatten.count
   end
+
+  def test_find_all_invoice_items_by_invoice_id
+    actual = @se.all_invoice_items_by_invoice
+    assert_instance_of Hash, actual
+  end
+
+
 
 
 

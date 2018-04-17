@@ -8,11 +8,14 @@ require 'pry'
 
 class SalesAnalystTest < Minitest::Test
   def setup
-    @sales_engine_full = SalesEngine.new({
-      items:     './data/items.csv',
+    @sales_engine_full = SalesEngine.new(
+      items: './data/items.csv',
       merchants: './data/merchants.csv',
-      invoices: './data/invoices.csv'
-      })
+      invoices: './data/invoices.csv',
+      invoice_items: './data/invoice_items.csv',
+      transactions: './data/transactions.csv',
+      customers: './data/customers.csv'
+      )
   end
 
   def test_it_exists
@@ -133,8 +136,17 @@ class SalesAnalystTest < Minitest::Test
 
   def test_invoice_paid_in_full
     sa = SalesAnalyst.new(@sales_engine_full)
-    expected = sa.invoice_paid_in_full?(1)
-    assert expected
+    actual = sa.invoice_paid_in_full?(1)
+    assert actual
   end
+
+  def test_it_returns_total_amount_of_invoice_by_invoice_id
+    sa = SalesAnalyst.new(@sales_engine_full)
+    expected = sa.invoice_total(7)
+    assert_instance_of BigDecimal, expected
+    assert_equal 0.1702232e5, expected
+  end
+
+
 
 end

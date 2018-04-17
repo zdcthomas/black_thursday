@@ -30,6 +30,10 @@ class Invoice
     @attributes[:merchant_id]
   end
 
+  def unit_price
+    @attributes[:unit_price]
+  end
+
   def status
     @attributes[:status]
   end

@@ -56,4 +56,8 @@ class SalesEngine
     @transactions.all.group_by(&:invoice_id)
   end
 
+  def all_invoice_items_by_invoice
+    @invoice_items.all.group_by(&:invoice_id)
+  end
+
 end

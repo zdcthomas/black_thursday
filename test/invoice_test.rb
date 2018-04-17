@@ -7,7 +7,7 @@ require 'pry'
 class InvoiceTest < Minitest::Test
 
   def setup
-    @now = Time.now
+    @now = Time.now.to_s
     @invoice = Invoice.new({
       :id          => 6,
       :customer_id => 7,
@@ -26,9 +26,9 @@ class InvoiceTest < Minitest::Test
     assert_equal 6, @invoice.id
     assert_equal 7, @invoice.customer_id
     assert_equal 8, @invoice.merchant_id
-    assert_equal "pending", @invoice.status
-    assert_equal @now, @invoice.created_at
-    assert_equal @now, @invoice.updated_at
+    assert_equal :pending, @invoice.status
+    assert_equal Time.parse(@now), @invoice.created_at
+    assert_equal Time.parse(@now), @invoice.updated_at
   end
 
 
