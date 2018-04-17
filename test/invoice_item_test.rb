@@ -1,21 +1,22 @@
+# frozen_string_literal: true
+
 require_relative './test_helper'
 require 'bigdecimal'
 require 'time'
 require './lib/invoice_item'
-
 class InvoiceItemTest < Minitest::Test
 
   def setup
-    @time = "2016-01-11 09:34:06 UTC"
-    @ii = InvoiceItem.new({
-      :id => "6",
-      :item_id => "7",
-      :invoice_id => "8",
-      :quantity => "1",
-      :unit_price => "1099",
-      :created_at => @time,
-      :updated_at => @time
-    })
+    @time = '2016-01-11 09:34:06 UTC'
+    @ii = InvoiceItem.new(
+      id: '6',
+      item_id: '7',
+      invoice_id: '8',
+      quantity: '1',
+      unit_price: '1099',
+      created_at: @time,
+      updated_at: @time
+      )
   end
 
   def test_it_exists
@@ -31,6 +32,5 @@ class InvoiceItemTest < Minitest::Test
     assert_instance_of Time, @ii.created_at
     assert_instance_of Time, @ii.updated_at
   end
-
 
 end

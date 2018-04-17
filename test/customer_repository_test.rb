@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative './test_helper'
 require 'time'
 require './lib/customer_repository'
@@ -102,11 +104,11 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal 140, actual
     assert_equal 'Vladimir', @cr.find_by_id(140).first_name
     attributes =  {
-                  :last_name                   => 'Ever',
-                  :first_name                  => 'Greatest',
-                  :created_at                  => Time.now,
-                  :updated_at                  => Time.now
-                  }
+                  last_name:                    'Ever',
+                  first_name:                   'Greatest',
+                  created_at:                   Time.now,
+                  updated_at:                   Time.now
+    }
     @cr.create(attributes)
     assert_equal 141, @cr.find_highest_id
     actual = @cr.find_by_id(141)
@@ -120,7 +122,7 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal Time.parse('2012-03-27 14:54:18 UTC'), actual.created_at
     assert_equal Time.parse('2012-03-27 14:54:18 UTC'), actual.updated_at
     attributes = {
-      :first_name => 'Vladimir'
+      first_name: 'Vladimir'
     }
     @cr.update(35, attributes)
     customer = @cr.find_by_id(35)
@@ -133,6 +135,5 @@ class CustomerRepositoryTest < Minitest::Test
     @cr.delete(4)
     assert_nil @cr.find_by_id(4)
   end
-
 
 end
