@@ -43,10 +43,15 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_test_all_invoices_per_day
-    assert_equal 7, se.test_test_all_invoices_per_day.keys.count
-    assert_equal 4985, se.all_invoices_per_day.values.flatten.count
-    assert_equal 2, se.all_invoices_per_day[1]
-    assert_equal 3, se.all_invoices_per_day[2]
+    assert_equal 7, @se.test_test_all_invoices_per_day.keys.count
+    assert_equal 4985, @se.all_invoices_per_day.values.flatten.count
+    assert_equal 2, @se.all_invoices_per_day[1]
+    assert_equal 3, @se.all_invoices_per_day[2]
+  end
+
+  def test_transactions_per_invoice
+    assert_instance_of Hash, @se.all_transactions_per_invoice
+    assert_equal 4, @se.all_transactions_per_invoice.values.flatten.count
   end
 
 

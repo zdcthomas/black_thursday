@@ -131,12 +131,16 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of String, expected.first
   end
 
+  def test_transactions_per_invoice
+    
+  end
+
   def test_invoice_paid_in_full
     sa = SalesAnalyst.new(@sales_engine_full)
-    expected = sa.invoice_paid_in_full?
+    expected = sa.invoice_paid_in_full?(1)
 
-    assert
-  end 
+    assert expected
+  end
 
 
 

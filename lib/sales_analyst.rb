@@ -57,6 +57,10 @@ class SalesAnalyst
     find_mean(merchant_price_averages).round(2)
   end
 
-  
+  def invoice_paid_in_full?(id)
+    find
+  end
+
+
 
 end
