@@ -59,9 +59,12 @@ class SalesAnalyst
 
   def invoice_paid_in_full?(id)
     transactions_per_invc = @sales_engine.all_transactions_per_invoice
-    transactions = transactions_per_invc[id]
-    transactions.any? do |transaction|
-      transaction.result == :success
+    if transactions = transactions_per_invc[id]
+      transactions.any? do |transaction|
+        transaction.result == :success
+      end
+    else
+      return false
     end
   end
 
