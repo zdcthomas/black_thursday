@@ -71,7 +71,7 @@ class SalesEngineTest < Minitest::Test
 
   def test_merchants_per_customer_id
     actual = @se.merchants_per_customer_id
-    assert_instance_of Integer, actual.keys.first
-    assert_instance_of Integer, actual.values.first
+    assert_instance_of Customer, actual.keys.first
+    assert_instance_of Merchant, actual.values.first
   end
 end

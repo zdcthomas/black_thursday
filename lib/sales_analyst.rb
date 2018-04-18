@@ -91,4 +91,8 @@ class SalesAnalyst
   def top_buyers(n = 20)
     @sales_engine.customers_by_invoice_total[0...n]
   end
+
+  def top_merchant_for_customer(customer_id)
+    
+  end
 end

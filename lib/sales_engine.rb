@@ -66,11 +66,8 @@ class SalesEngine
       @customers.find_by_id(invoice.customer_id)
     end
   end
-  def customers_by_invoice_total
-    invoices = @invoices.all
-    customers_by_invoice = invoices.group_by do |invoice|
-      invoice.customer_id
-    end
+
+  def customers_by_total_invoice_totals(customers_by_invoice)
     customer_by_total_invoice_totals = {}
     customers_by_invoice.each do |customer, invoices|
       total = invoices.reduce(0) do |sum, invoice|
@@ -78,10 +75,30 @@ class SalesEngine
       end
       customer_by_total_invoice_totals[customer] = total
     end
+    customer_by_total_invoice_totals
+  end
+
+  def customers_by_invoice_total
+    invoices = @invoices.all
+    customers_by_invoice = invoices.group_by do |invoice|
+      invoice.customer_id
+    end
+    customer_by_total_invoice_totals = customers_by_total_invoice_totals(customers_by_invoice)
     top_customers = customer_by_total_invoice_totals.sort_by{|key,value|value}.reverse
     top_customers.map do |customer_pair|
       customer_id = customer_pair[0]
       @customers.find_by_id(customer_id)
     end
   end
+
+  def merchants_per_customer_id
+    merch_customer_id = {}
+    @invoices.all.each do |invoice|
+      customer = @customers.find_by_id(invoice.customer_id)
+      merchant = @merchants.find_by_id(invoice.merchant_id)
+      merch_customer_id[customer] = merchant
+    end
+    merch_customer_id
+  end
+
 end
