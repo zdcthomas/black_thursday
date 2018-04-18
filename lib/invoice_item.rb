@@ -1,4 +1,6 @@
+# frozen_string_literal: true
 
+# creates invoice item objects with attributes
 class InvoiceItem
   attr_reader :attributes
 

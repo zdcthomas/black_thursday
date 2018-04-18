@@ -1,3 +1,4 @@
+# provides methods for invoice analyst
 module InvoiceAnalyst
   def number_of_invoices_per_day
     @all_invoices_per_day.values.map(&:count)

@@ -28,18 +28,15 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_average_items_per_merchant
-
     assert_equal 2.88, @sa.average_items_per_merchant
   end
 
   def test_can_find_sum
-
     @sa.find_sum([3, 4])
     assert_equal 7, @sa.find_sum([3, 4])
   end
 
   def test_can_find_mean
-
     @sa.find_mean([4, 4])
     assert_equal 4, @sa.find_mean([4, 4])
   end
@@ -140,7 +137,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_top_merchant_for_customer
     id = 100
-    actual = @sa.top_merchants_for_customer(id)
+    actual = @sa.top_merchant_for_customer(id)
     assert_instance_of Merchant, actual
     assert_equal 12336753, actual.id
   end

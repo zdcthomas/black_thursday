@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pry'
 require_relative '../lib/item_repository'
 require_relative '../lib/merchant_repository'
 require './test/test_helper'
@@ -43,6 +42,17 @@ class SalesEngineTest < Minitest::Test
     assert_equal 4985, @se.all_invoices_per_merchant.values.flatten.count
   end
 
+  def test_from_csv
+    actual = SalesEngine.from_csv(
+      items: './data/items.csv',
+      merchants: './data/merchants.csv',
+      invoices: './data/invoices.csv',
+      invoice_items: './data/invoice_items.csv',
+      transactions: './data/transactions.csv',
+      customers: './data/customers.csv')
+    assert_instance_of SalesEngine, actual
+  end
+
   def test_all_invoices_per_day
     assert_equal 7, @se.all_invoices_per_day.keys.count
     assert_equal 4985, @se.all_invoices_per_day.values.flatten.count
@@ -69,9 +79,4 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of InvoiceItem, actual.values[0][0]
   end
 
-  def test_merchants_per_customer_id
-    actual = @se.merchants_per_customer_id
-    assert_instance_of Integer, actual.keys.first
-    assert_instance_of Merchant, actual.values.first
-  end
 end

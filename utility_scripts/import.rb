@@ -1,4 +1,3 @@
-require 'pry'
 require 'etsy'
 Etsy.protocol   = "https"
 Etsy.api_key    = "rfbxa70abkze5b6u9jm1kh6k"

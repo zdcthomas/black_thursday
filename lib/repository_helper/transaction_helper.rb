@@ -1,3 +1,4 @@
+# provides repo methods for Transaction repo
 module TransactionHelper
   def find_all_by_invoice_id(tr)
     @repository.values.find_all do |transaction|

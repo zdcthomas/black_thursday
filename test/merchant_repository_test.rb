@@ -7,23 +7,33 @@ class MerchantRepositoryTest < Minitest::Test
   def setup
     @turing = [
       [:id, '1'],
-      [:name, 'Turing School']
+      [:name, 'Turing School'],
+      [:created_at, '2010-12-10'],
+      [:updated_at, '2011-12-04']
       ]
     @candisart = [
       [:id, '2'],
-      [:name, 'Candisart']
+      [:name, 'Candisart'],
+      [:created_at, '2009-05-30'],
+      [:updated_at, '2010-08-29']
       ]
     @miniaturebikez = [
       [:id, '3'],
-      [:name, 'MiniatureBikez']
+      [:name, 'MiniatureBikez'],
+      [:created_at, '2010-03-30'],
+      [:updated_at, '2013-01-21']
       ]
     @bowlsbychris = [
       [:id, '4'],
-      [:name, 'bowlsbychris']
+      [:name, 'bowlsbychris'],
+      [:created_at, '2008-06-09'],
+      [:updated_at, '2015-04-16']
       ]
     @urcase17 = [
       [:id, '5'],
-      [:name, 'urcase17']
+      [:name, 'urcase17'],
+      [:created_at, '2010-12-10'],
+      [:updated_at, '2011-12-04']
       ]
     @merchants  = [
                   @turing,
@@ -62,14 +72,14 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_method_find_by_id
     mr = MerchantRepository.new(@merchants)
-    expected = {:id=>1, :name=>"Turing School"}
-    actual = mr.find_by_id(1).attributes
+    expected = "Turing School"
+    actual = mr.find_by_id(1).name
     assert_equal expected, actual
-    expected = {:id=>3, :name=>"MiniatureBikez"}
-    actual = mr.find_by_id(3).attributes
+    expected ="MiniatureBikez"
+    actual = mr.find_by_id(3).name
     assert_equal expected, actual
-    expected = {:id=>5, :name=>"urcase17"}
-    actual = mr.find_by_id(5).attributes
+    expected = "urcase17"
+    actual = mr.find_by_id(5).name
     assert_equal expected, actual
   end
 

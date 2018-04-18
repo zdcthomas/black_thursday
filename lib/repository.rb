@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pry'
 require 'bigdecimal'
 require 'time'
 require_relative './repository_helper/helper'

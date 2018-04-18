@@ -1,4 +1,5 @@
 require 'time'
+# creates invoice items with attributes
 class Invoice
   attr_accessor :attributes
 

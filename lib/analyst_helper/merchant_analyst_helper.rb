@@ -1,3 +1,4 @@
+# provides methods for merchant analysis
 module MerchantAnalyst
   def merchants_with_high_item_count
     std_dev = average_items_per_merchant_standard_deviation

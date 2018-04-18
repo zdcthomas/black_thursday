@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'Time'
 # merchant has attributes which contain id and name in a hash
 class Merchant
   attr_reader :attributes

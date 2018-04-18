@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pry'
 
 require_relative './analyst_helper/helper'
 # analyses various aspects of sales engine
@@ -93,12 +92,13 @@ class SalesAnalyst
   end
 
   def top_merchant_for_customer(customer_id)
-    merchants = @sales_engine.merchants_per_customer_id[customer_id]
-    # binding.pry
-    sorted = merchants.max_by do |merchant|
-      merchant[1].length
+    inv_items = @sales_engine.invoice_items_per_customer_id[customer_id]
+    grouped_by_invoices = inv_items.group_by(&:invoice_id)
+    invoice_id = grouped_by_invoices.keys.max_by do |invoice_id| 
+        quantity = grouped_by_invoices[invoice_id].inject(0){|sum,inv_item|sum + inv_item.quantity}
+        grouped_by_invoices[invoice_id].count * quantity
     end
-    binding.pry
-    sorted[0]
+    invoice = @sales_engine.invoices.find_by_id(invoice_id)
+    @sales_engine.merchants.find_by_id(invoice.merchant_id)
   end
 end
