@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require_relative './repository'
 require_relative './transaction'
 require 'time'
-
+# holds transactions
 class TransactionRepository
   include Repository
 

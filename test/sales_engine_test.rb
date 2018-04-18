@@ -42,6 +42,17 @@ class SalesEngineTest < Minitest::Test
     assert_equal 4985, @se.all_invoices_per_merchant.values.flatten.count
   end
 
+  def test_from_csv
+    actual = SalesEngine.from_csv(
+      items: './data/items.csv',
+      merchants: './data/merchants.csv',
+      invoices: './data/invoices.csv',
+      invoice_items: './data/invoice_items.csv',
+      transactions: './data/transactions.csv',
+      customers: './data/customers.csv')
+    assert_instance_of SalesEngine, actual
+  end
+
   def test_all_invoices_per_day
     assert_equal 7, @se.all_invoices_per_day.keys.count
     assert_equal 4985, @se.all_invoices_per_day.values.flatten.count
@@ -59,8 +70,13 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Hash, actual
   end
 
-
-
-
+  def test_all_invoice_items_by_customer
+    actual = @se.all_invoice_items_by_customer
+    assert_equal 901, actual.keys.length
+    assert_instance_of Customer, actual.keys[0]
+    assert_equal 21830, actual.values.flatten.length
+    assert_instance_of Array, actual.values[0]
+    assert_instance_of InvoiceItem, actual.values[0][0]
+  end
 
 end

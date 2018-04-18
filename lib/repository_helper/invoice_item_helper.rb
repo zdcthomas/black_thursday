@@ -1,3 +1,4 @@
+# provides repo methods for Invoice Item repo
 module InvoiceItemHelper
   def find_all_by_item_id(ii)
     @repository.values.find_all do |invoice_item|

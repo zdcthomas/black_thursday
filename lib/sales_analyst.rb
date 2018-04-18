@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pry'
 
 require_relative './analyst_helper/helper'
 # analyses various aspects of sales engine
@@ -69,13 +68,37 @@ class SalesAnalyst
     end
   end
 
+  def fake_total(invoice_id)
+    prices = @sales_engine.all_invoice_items_by_invoice[invoice_id].map do |invoice_item|
+      invoice_item.unit_price * invoice_item.quantity
+    end
+    return prices.inject(0){|sum, number| sum+number}
+  end
+
   def invoice_total(invoice_id)
     prices = @sales_engine.all_invoice_items_by_invoice[invoice_id].map do |invoice_item|
       invoice_item.unit_price * invoice_item.quantity
     end
-    prices.inject(0){|sum, number| sum+number}
+    if invoice_paid_in_full?(invoice_id)
+      return prices.inject(0){|sum, number| sum+number}
+    else
+      return 0
+    end
   end
 
 
+  def top_buyers(n = 20)
+    @sales_engine.customers_by_invoice_total[0...n]
+  end
 
+  def top_merchant_for_customer(customer_id)
+    inv_items = @sales_engine.invoice_items_per_customer_id[customer_id]
+    grouped_by_invoices = inv_items.group_by(&:invoice_id)
+    invoice_id = grouped_by_invoices.keys.max_by do |invoice_id| 
+        quantity = grouped_by_invoices[invoice_id].inject(0){|sum,inv_item|sum + inv_item.quantity}
+        grouped_by_invoices[invoice_id].count * quantity
+    end
+    invoice = @sales_engine.invoices.find_by_id(invoice_id)
+    @sales_engine.merchants.find_by_id(invoice.merchant_id)
+  end
 end

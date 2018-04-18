@@ -1,4 +1,6 @@
+# frozen_string_literal: true
 
+# creates transaction objects with attributes
 class Transaction
   attr_reader :attributes
 

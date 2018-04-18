@@ -1,3 +1,4 @@
+# provides item analysis methods
 module ItemAnalyst
 
   def number_of_items_per_merchant

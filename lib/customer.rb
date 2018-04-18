@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 
-
+# creates customer objects with attributes
 class Customer
   attr_reader   :attributes
 
