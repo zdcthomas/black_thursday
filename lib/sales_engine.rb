@@ -60,6 +60,11 @@ class SalesEngine
     @invoice_items.all.group_by(&:invoice_id)
   end
 
-  
+  def all_invoice_items_by_customer
+    @invoice_items.all.group_by do |invoice_item| 
+      invoice = @invoices.find_by_id(invoice_item.invoice_id)
+      @customers.find_by_id(invoice.customer_id)
+    end
+  end
 
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'pry'
 require_relative '../lib/item_repository'
 require_relative '../lib/merchant_repository'
 require './test/test_helper'
@@ -61,13 +62,10 @@ class SalesEngineTest < Minitest::Test
 
   def test_all_invoice_items_by_customer
     actual = @se.all_invoice_items_by_customer
-    assert_equal 2, actual.keys.length
+    assert_equal 901, actual.keys.length
     assert_instance_of Customer, actual.keys[0]
-    assert_equal 50, actual.values.length
+    assert_equal 21830, actual.values.flatten.length
     assert_instance_of Array, actual.values[0]
     assert_instance_of InvoiceItem, actual.values[0][0]
   end
-
-
-
 end

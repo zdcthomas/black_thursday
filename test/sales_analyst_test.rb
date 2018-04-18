@@ -146,4 +146,13 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 0.1702232e5, expected
   end
 
+  def test_top_buyers
+    sa = SalesAnalyst.new(@sales_engine_full)
+    actual = sa.top_buyers(2)
+    assert_equal 2, actual.length
+    assert_instance_of Customer, actual[0]
+    actual = sa.top_buyers(6)
+    assert_equal 6, actual.length
+    assert_instance_of Customer, actual[5]
+  end
 end
