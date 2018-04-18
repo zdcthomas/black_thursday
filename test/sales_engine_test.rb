@@ -59,7 +59,14 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Hash, actual
   end
 
-
+  def test_all_invoice_items_by_customer
+    actual = @se.all_invoice_items_by_customer
+    assert_equal 2, actual.keys.length
+    assert_instance_of Customer, actual.keys[0]
+    assert_equal 50, actual.values.length
+    assert_instance_of Array, actual.values[0]
+    assert_instance_of InvoiceItem, actual.values[0][0]
+  end
 
 
 

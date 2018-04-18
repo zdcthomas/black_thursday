@@ -146,6 +146,4 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 0.1702232e5, expected
   end
 
-
-
 end
