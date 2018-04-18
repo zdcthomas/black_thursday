@@ -19,13 +19,13 @@ class SalesEngine
               :transactions,
               :customers
   def initialize(paths)
-    @items = ItemRepository.new(FileIo.load(paths[:items]))
-    @merchants = MerchantRepository.new(FileIo.load(paths[:merchants]))
-    @invoices = InvoiceRepository.new(FileIo.load(paths[:invoices]))
-    @invoice_items = InvoiceItemRepository.new(FileIo.load(paths[:invoice_items]))
-    @transactions = TransactionRepository.new(FileIo.load(paths[:transactions]))
-    @customers = CustomerRepository.new(FileIo.load(paths[:customers]))
-    @analyst = SalesAnalyst.new(self)
+    @items ||= ItemRepository.new(FileIo.load(paths[:items]))
+    @merchants ||= MerchantRepository.new(FileIo.load(paths[:merchants]))
+    @invoices ||= InvoiceRepository.new(FileIo.load(paths[:invoices]))
+    @invoice_items ||= InvoiceItemRepository.new(FileIo.load(paths[:invoice_items]))
+    @transactions ||= TransactionRepository.new(FileIo.load(paths[:transactions]))
+    @customers ||= CustomerRepository.new(FileIo.load(paths[:customers]))
+    @analyst ||= SalesAnalyst.new(self)
   end
 
   def all_items_per_merchant
@@ -61,10 +61,27 @@ class SalesEngine
   end
 
   def all_invoice_items_by_customer
-    @invoice_items.all.group_by do |invoice_item| 
+    @invoice_items.all.group_by do |invoice_item|
       invoice = @invoices.find_by_id(invoice_item.invoice_id)
       @customers.find_by_id(invoice.customer_id)
     end
   end
-
+  def customers_by_invoice_total
+    invoices = @invoices.all
+    customers_by_invoice = invoices.group_by do |invoice|
+      invoice.customer_id
+    end
+    customer_by_total_invoice_totals = {}
+    customers_by_invoice.each do |customer, invoices|
+      total = invoices.reduce(0) do |sum, invoice|
+        sum + @analyst.invoice_total(invoice.id)
+      end
+      customer_by_total_invoice_totals[customer] = total
+    end
+    top_customers = customer_by_total_invoice_totals.sort_by{|key,value|value}.reverse
+    top_customers.map do |customer_pair|
+      customer_id = customer_pair[0]
+      @customers.find_by_id(customer_id)
+    end
+  end
 end

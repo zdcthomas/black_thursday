@@ -69,13 +69,26 @@ class SalesAnalyst
     end
   end
 
+  def fake_total(invoice_id)
+    prices = @sales_engine.all_invoice_items_by_invoice[invoice_id].map do |invoice_item|
+      invoice_item.unit_price * invoice_item.quantity
+    end
+    return prices.inject(0){|sum, number| sum+number}
+  end
+
   def invoice_total(invoice_id)
     prices = @sales_engine.all_invoice_items_by_invoice[invoice_id].map do |invoice_item|
       invoice_item.unit_price * invoice_item.quantity
     end
-    prices.inject(0){|sum, number| sum+number}
+    if invoice_paid_in_full?(invoice_id)
+      return prices.inject(0){|sum, number| sum+number}
+    else
+      return 0
+    end
   end
 
 
-
+  def top_buyers(n = 20)
+    @sales_engine.customers_by_invoice_total[0...n]
+  end
 end

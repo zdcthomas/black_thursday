@@ -14,7 +14,6 @@ class Invoice
     data[:status] = data[:status].to_sym
     data[:created_at] = Time.parse(data[:created_at])
     data[:updated_at] = Time.parse(data[:updated_at])
-    data[:unit_price_to_dollars] = data[:unit_price].to_f
     data
   end
 
@@ -45,6 +44,5 @@ class Invoice
   def updated_at
     @attributes[:updated_at]
   end
-
 
 end
