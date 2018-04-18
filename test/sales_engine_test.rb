@@ -68,4 +68,10 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Array, actual.values[0]
     assert_instance_of InvoiceItem, actual.values[0][0]
   end
+
+  def test_merchants_per_customer_id
+    actual = @se.merchants_per_customer_id
+    assert_instance_of Integer, actual.keys.first
+    assert_instance_of Integer, actual.values.first
+  end
 end
