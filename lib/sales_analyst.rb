@@ -93,6 +93,12 @@ class SalesAnalyst
   end
 
   def top_merchant_for_customer(customer_id)
-    @sales_engine.merchants_per_customer_id
+    merchants = @sales_engine.merchants_per_customer_id[customer_id]
+    # binding.pry
+    sorted = merchants.max_by do |merchant|
+      merchant[1].length
+    end
+    binding.pry
+    sorted[0]
   end
 end

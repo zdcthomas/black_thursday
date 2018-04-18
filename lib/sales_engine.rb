@@ -19,13 +19,13 @@ class SalesEngine
               :transactions,
               :customers
   def initialize(paths)
-    @items ||= ItemRepository.new(FileIo.load(paths[:items]))
-    @merchants ||= MerchantRepository.new(FileIo.load(paths[:merchants]))
-    @invoices ||= InvoiceRepository.new(FileIo.load(paths[:invoices]))
-    @invoice_items ||= InvoiceItemRepository.new(FileIo.load(paths[:invoice_items]))
-    @transactions ||= TransactionRepository.new(FileIo.load(paths[:transactions]))
-    @customers ||= CustomerRepository.new(FileIo.load(paths[:customers]))
-    @analyst ||= SalesAnalyst.new(self)
+    @items = ItemRepository.new(FileIo.load(paths[:items]))
+    @merchants = MerchantRepository.new(FileIo.load(paths[:merchants]))
+    @invoices = InvoiceRepository.new(FileIo.load(paths[:invoices]))
+    @invoice_items = InvoiceItemRepository.new(FileIo.load(paths[:invoice_items]))
+    @transactions = TransactionRepository.new(FileIo.load(paths[:transactions]))
+    @customers = CustomerRepository.new(FileIo.load(paths[:customers]))
+    @analyst = SalesAnalyst.new(self)
   end
 
   def all_items_per_merchant
@@ -95,7 +95,13 @@ class SalesEngine
     merch_customer_id = {}
     @invoices.all.each do |invoice|
       merchant = @merchants.find_by_id(invoice.merchant_id)
-      merch_customer_id[customer_id] = merchant
+      if merch_customer_id[invoice.customer_id]
+        merch_customer_id[invoice.customer_id] << [merchant, @transactions.find_all_by_invoice_id(invoice.id)]
+      else
+        merch_customer_id[invoice.customer_id] = []
+        merch_customer_id[invoice.customer_id] << [merchant, @transactions.find_all_by_invoice_id(invoice.id)]
+
+      end
     end
     merch_customer_id
   end
