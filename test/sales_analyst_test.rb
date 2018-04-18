@@ -137,4 +137,11 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 6, actual.length
     assert_instance_of Customer, actual[5]
   end
+
+  def test_top_merchant_for_customer
+    id = 100
+    actual = @sa.top_merchants_for_customer(id)
+    assert_instance_of Merchant, actual
+    assert_equal 12336753, actual.id
+  end
 end

@@ -93,6 +93,6 @@ class SalesAnalyst
   end
 
   def top_merchant_for_customer(customer_id)
-    
+    @sales_engine.merchants_per_customer_id
   end
 end

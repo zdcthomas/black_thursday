@@ -94,9 +94,8 @@ class SalesEngine
   def merchants_per_customer_id
     merch_customer_id = {}
     @invoices.all.each do |invoice|
-      customer = @customers.find_by_id(invoice.customer_id)
       merchant = @merchants.find_by_id(invoice.merchant_id)
-      merch_customer_id[customer] = merchant
+      merch_customer_id[customer_id] = merchant
     end
     merch_customer_id
   end
